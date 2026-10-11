@@ -223,10 +223,15 @@
       align-items: center; gap: clamp(3rem, 6vw, 6rem);
     }
     .attorney-hero__image {
-      aspect-ratio: 4 / 5; border-radius: var(--radius-md); overflow: hidden;
+      /* FIXED: Removed forced aspect-ratio and object-fit: cover to prevent image cropping */
+      border-radius: var(--radius-md); overflow: hidden;
       background: var(--navy-800); box-shadow: var(--shadow-md); border: 1px solid rgba(176, 141, 87, 0.2);
     }
-    .attorney-hero__image img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+    .attorney-hero__image img { 
+      width: 100%; 
+      height: auto; /* Allows image to maintain its natural aspect ratio */
+      display: block; 
+    }
     .attorney-hero__content h1 { color: var(--parchment-100); margin-bottom: 0.5rem; }
     .attorney-hero__title {
       display: block; color: var(--brass-500); font-family: "Inter", Arial, sans-serif;
@@ -348,7 +353,7 @@
     }
     @media (max-width: 850px) {
       .attorney-hero-grid { grid-template-columns: 1fr; }
-      .attorney-hero__image { width: min(100%, 400px); margin: 0 auto 2rem; }
+      .attorney-hero__image { width: min(100%, 600px); margin: 0 auto 2rem; } /* Increased max-width slightly for landscape images */
       .footer-main { grid-template-columns: 1fr 1fr; }
       .footer-brand { grid-column: 1 / -1; }
     }
@@ -422,12 +427,11 @@
     <section class="attorney-hero" aria-labelledby="attorney-name">
       <div class="container attorney-hero-grid">
         <div class="attorney-hero__image">
-          <!-- Primary image updated to LawOffices.jpg -->
           <img
             src="images/LawOffices.jpg"
-            alt="Tiarra Thompson, Partner Attorney at Sankofa Law Group"
+            alt="Sankofa Law Group Offices"
             width="800"
-            height="1000"
+            height="600"
             loading="lazy"
           >
         </div>
