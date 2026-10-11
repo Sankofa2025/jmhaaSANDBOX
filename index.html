@@ -223,13 +223,12 @@
       align-items: center; gap: clamp(3rem, 6vw, 6rem);
     }
     .attorney-hero__image {
-      /* FIXED: Removed forced aspect-ratio and object-fit: cover to prevent image cropping */
       border-radius: var(--radius-md); overflow: hidden;
       background: var(--navy-800); box-shadow: var(--shadow-md); border: 1px solid rgba(176, 141, 87, 0.2);
     }
     .attorney-hero__image img { 
       width: 100%; 
-      height: auto; /* Allows image to maintain its natural aspect ratio */
+      height: auto;
       display: block; 
     }
     .attorney-hero__content h1 { color: var(--parchment-100); margin-bottom: 0.5rem; }
@@ -268,6 +267,24 @@
     }
     .focus-card h3 { margin-bottom: 1rem; }
     .focus-card p { color: var(--charcoal-700); line-height: 1.6; }
+
+    /* Flyer Section */
+    .flyer-section { 
+      background: var(--parchment-100); 
+      border-top: 1px solid rgba(58, 58, 54, 0.1); 
+    }
+    .flyer-wrapper {
+      max-width: 42rem;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .flyer-wrapper img {
+      width: 100%;
+      height: auto;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(176, 141, 87, 0.25);
+    }
 
     /* Contact Form */
     .contact-form-section {
@@ -353,7 +370,7 @@
     }
     @media (max-width: 850px) {
       .attorney-hero-grid { grid-template-columns: 1fr; }
-      .attorney-hero__image { width: min(100%, 600px); margin: 0 auto 2rem; } /* Increased max-width slightly for landscape images */
+      .attorney-hero__image { width: min(100%, 600px); margin: 0 auto 2rem; }
       .footer-main { grid-template-columns: 1fr 1fr; }
       .footer-brand { grid-column: 1 / -1; }
     }
@@ -534,6 +551,26 @@
       </div>
     </section>
 
+    <!-- Facebook Flyer Section -->
+    <section id="flyer" class="section flyer-section" aria-labelledby="flyer-heading">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Firm Updates</span>
+          <h2 id="flyer-heading">Community & Firm Announcements</h2>
+          <p>Stay informed about our latest initiatives, community events, and legal insights.</p>
+        </div>
+        <div class="flyer-wrapper">
+          <img 
+            src="images/flyer.jpg" 
+            alt="Sankofa Law Group Community Flyer and Announcements" 
+            width="800" 
+            height="1000" 
+            loading="lazy"
+          >
+        </div>
+      </div>
+    </section>
+
     <!-- Credentials Section -->
     <section id="credentials" class="section credentials-section" aria-labelledby="credentials-heading">
       <div class="container">
@@ -609,12 +646,6 @@
             details in this form. Submission does not create an attorney-client relationship.
           </p>
 
-          <!-- 
-            IMPORTANT: To make this form autosend to tiarra@tiarrathompsonlaw.com:
-            1. Go to https://formspree.io/ and create a free account.
-            2. Create a new form and set the destination email to: tiarra@tiarrathompsonlaw.com
-            3. Replace "YOUR_FORM_ID" in the action URL below with your actual Formspree form ID.
-          -->
           <form id="consultation-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
             <div class="form-grid">
               <div class="field">
@@ -653,7 +684,6 @@
               </div>
             </div>
 
-            <!-- Honeypot field for spam protection -->
             <div class="sr-only" aria-hidden="true">
               <label for="website">Website</label>
               <input id="website" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
@@ -753,7 +783,6 @@
   </footer>
 
   <script>
-    // Mobile Menu Toggle
     const menuToggle = document.querySelector(".menu-toggle");
     const mobileMenu = document.querySelector(".mobile-nav");
     const mobileLinks = mobileMenu.querySelectorAll("a");
@@ -782,10 +811,8 @@
       }
     });
 
-    // Dynamic Year
     document.getElementById("current-year").textContent = new Date().getFullYear();
 
-    // Form Submission Handler (Graceful Fallback for Formspree)
     const form = document.getElementById("consultation-form");
     const formStatus = document.getElementById("form-status");
 
