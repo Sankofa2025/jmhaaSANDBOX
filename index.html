@@ -646,7 +646,12 @@
             details in this form. Submission does not create an attorney-client relationship.
           </p>
 
-          <form id="consultation-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <!-- 
+            NOTE: This form uses a pure client-side 'mailto' generator. 
+            No third-party services (like Formspree) or backend servers are required.
+            It opens the user's default email client with a pre-formatted message.
+          -->
+          <form id="consultation-form">
             <div class="form-grid">
               <div class="field">
                 <label for="first-name">First name</label>
@@ -668,10 +673,10 @@
                 <label for="matter-type">Type of matter</label>
                 <select id="matter-type" name="matter_type" required>
                   <option value="">Select one</option>
-                  <option value="criminal-defense">Criminal defense</option>
-                  <option value="civil-litigation">Civil litigation</option>
-                  <option value="family-law">Family law</option>
-                  <option value="other">Other / not sure</option>
+                  <option value="Criminal Defense">Criminal defense</option>
+                  <option value="Civil Litigation">Civil litigation</option>
+                  <option value="Family Law">Family law</option>
+                  <option value="Other">Other / not sure</option>
                 </select>
               </div>
               <div class="field field--full">
@@ -684,18 +689,17 @@
               </div>
             </div>
 
+            <!-- Honeypot field for basic bot protection -->
             <div class="sr-only" aria-hidden="true">
               <label for="website">Website</label>
               <input id="website" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
             </div>
 
             <p class="form-consent">
-              By submitting this form, you acknowledge that you have read the
-              <a href="/privacy-policy/">Privacy Policy</a> and understand that submitting this form
-              does not create an attorney-client relationship.
+              By clicking "Open Email Client", your default email application will open with a pre-filled message to Tiarra Thompson. Submitting this form does not create an attorney-client relationship.
             </p>
 
-            <button class="btn btn--oxblood" type="submit">Submit Consultation Request</button>
+            <button class="btn btn--oxblood" type="submit">Open Email Client</button>
             <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
           </form>
         </div>
@@ -783,6 +787,7 @@
   </footer>
 
   <script>
+    // Mobile Menu Toggle
     const menuToggle = document.querySelector(".menu-toggle");
     const mobileMenu = document.querySelector(".mobile-nav");
     const mobileLinks = mobileMenu.querySelectorAll("a");
@@ -811,41 +816,58 @@
       }
     });
 
+    // Dynamic Year
     document.getElementById("current-year").textContent = new Date().getFullYear();
 
+    // Native Mailto Form Handler (No Third-Party Services)
     const form = document.getElementById("consultation-form");
     const formStatus = document.getElementById("form-status");
 
     if (form) {
-      form.addEventListener("submit", async (e) => {
+      form.addEventListener("submit", (e) => {
         e.preventDefault();
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalBtnText = submitBtn.textContent;
-        submitBtn.textContent = "Sending...";
-        submitBtn.disabled = true;
-        formStatus.textContent = "";
-
-        try {
-          const response = await fetch(form.action, {
-            method: form.method,
-            body: new FormData(form),
-            headers: { Accept: "application/json" }
-          });
-
-          if (response.ok) {
-            form.reset();
-            formStatus.textContent = "Thank you. Your consultation request has been securely submitted. Tiarra or a team member will contact you shortly.";
-            formStatus.style.color = "var(--navy-900)";
-          } else {
-            throw new Error("Form submission failed");
-          }
-        } catch (error) {
-          formStatus.textContent = "There was an error submitting the form. Please call us directly at (708) 270-4954.";
-          formStatus.style.color = "var(--oxblood-600)";
-        } finally {
-          submitBtn.textContent = originalBtnText;
-          submitBtn.disabled = false;
+        
+        // Trigger native HTML5 validation
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
         }
+
+        const formData = new FormData(form);
+        const gotcha = formData.get("_gotcha");
+        
+        // Silent fail for bots hitting the honeypot
+        if (gotcha) {
+          return; 
+        }
+
+        const firstName = formData.get("first_name");
+        const lastName = formData.get("last_name");
+        const email = formData.get("email");
+        const phone = formData.get("phone");
+        const matterType = formData.get("matter_type");
+        const message = formData.get("message");
+
+        // Construct email subject and body
+        const subject = encodeURIComponent(`Consultation Request: ${matterType} - ${firstName} ${lastName}`);
+        const body = encodeURIComponent(
+          `Name: ${firstName} ${lastName}\n` +
+          `Email: ${email}\n` +
+          `Phone: ${phone}\n` +
+          `Matter Type: ${matterType}\n\n` +
+          `Message:\n${message}\n\n` +
+          `---\nDisclaimer: This inquiry does not create an attorney-client relationship.`
+        );
+
+        // Generate the mailto link
+        const mailtoLink = `mailto:tiarra@tiarrathompsonlaw.com?subject=${subject}&body=${body}`;
+        
+        // Open the user's default email client
+        window.location.href = mailtoLink;
+
+        // Update UI to inform the user
+        formStatus.textContent = "Your default email client has been opened. Please review and click 'Send' in your email app to complete your request.";
+        formStatus.style.color = "var(--brass-500)";
       });
     }
   </script>
