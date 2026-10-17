@@ -209,10 +209,11 @@ p+p{margin-top:1rem}
 .editorial-block .serif{font-size:3rem;line-height:1.1}
 .media-grid{grid-template-columns:repeat(3,1fr)}
 .media-card{border:1px solid var(--line);padding:28px;display:flex;
-  flex-direction:column;align-items:flex-start;gap:22px;transition:border-color 0.3s}
-.media-card:hover{border-color:var(--gold)}
-.media-card h3{font-family:Georgia,serif;font-size:1.7rem}
-.media-card p{color:var(--muted);font-size:.9rem;flex:1}
+  flex-direction:column;align-items:flex-start;gap:22px;transition:border-color 0.3s;
+  text-decoration:none; color:inherit; background: white;}
+.media-card:hover{border-color:var(--gold); transform:translateY(-4px); box-shadow:0 10px 30px rgba(0,0,0,0.05)}
+.media-card h3{font-family:Georgia,serif;font-size:1.5rem; line-height: 1.25;}
+.media-card p{color:var(--muted);font-size:.95rem;flex:1}
 .review-shell{max-width:900px;margin:auto;text-align:center}
 blockquote{font-family:Georgia,serif;font-size:clamp(1.6rem,3vw,2.6rem);
   line-height:1.4;margin:30px 0}
@@ -273,6 +274,8 @@ blockquote{font-family:Georgia,serif;font-size:clamp(1.6rem,3vw,2.6rem);
   .editorial-block { background: #1c2926; }
   .review-controls button { color: #f6f3ec; border-color: #3a4542; }
   .review-controls button:hover { background: #f6f3ec; color: #111817; }
+  .media-card { background: #1c2926; border-color: #2a3330; }
+  .media-card p { color: #9ca3af; }
 }
 
 @media(min-width:1500px){.hero-grid{min-height:740px}}
@@ -362,7 +365,7 @@ blockquote{font-family:Georgia,serif;font-size:clamp(1.6rem,3vw,2.6rem);
       <a href="#practice">Practice</a>
       <a href="#results">Results</a>
       <a href="#team">Our team</a>
-      <a href="#media">Media</a>
+      <a href="/blog.html">News</a>
       <a href="#reviews">Reviews</a>
       <a class="btn gold" href="#contact">Free consultation ↗</a>
     </nav>
@@ -575,6 +578,52 @@ blockquote{font-family:Georgia,serif;font-size:clamp(1.6rem,3vw,2.6rem);
     </div>
   </section>
 
+  <!-- LATEST NEWS SECTION -->
+  <section class="section" id="news">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Latest updates</p>
+          <h2>In the news.</h2>
+        </div>
+        <p class="muted">
+          Recent case victories, firm announcements, and legal insights from our team.
+        </p>
+      </div>
+      <div class="grid media-grid">
+        
+        <!-- BLOG POST 1 (NEWEST) -->
+        <a class="media-card" href="/blog/weather-truck-accident-liability.html">
+          <p class="eyebrow">Trucking Accidents · October 2026</p>
+          <h3>How Weather Conditions Affect Liability in Truck Accident Cases</h3>
+          <p>Bad weather does not automatically excuse unsafe commercial driving. Learn how liability is determined when Atlanta roads turn dangerous.</p>
+          <span class="read-more" style="color:var(--gold);font-weight:600;font-size:.85rem">Read full article →</span>
+        </a>
+
+        <!-- BLOG POST 2 (Placeholder for future) -->
+        <a class="media-card" href="/blog.html">
+          <p class="eyebrow">Firm News · September 2026</p>
+          <h3>More Insights Coming Soon</h3>
+          <p>Stay tuned for upcoming case victories, community involvement, and legal perspectives from Stewart Miller Simmons.</p>
+          <span class="read-more" style="color:var(--gold);font-weight:600;font-size:.85rem">View all news →</span>
+        </a>
+
+        <!-- BLOG POST 3 (Placeholder for future) -->
+        <a class="media-card" href="/blog.html">
+          <p class="eyebrow">Community · August 2026</p>
+          <h3>Committed to Atlanta and Washington, DC</h3>
+          <p>Our firm is proud to support the communities we serve through advocacy, mentorship, and relentless pursuit of justice.</p>
+          <span class="read-more" style="color:var(--gold);font-weight:600;font-size:.85rem">View all news →</span>
+        </a>
+
+      </div>
+      <div class="actions" style="margin-top:40px">
+        <a class="btn outline" href="/blog.html">View all news ↗</a>
+      </div>
+    </div>
+  </section>
+  <!-- END LATEST NEWS SECTION -->
+
   <section class="section">
     <div class="wrap faq">
       <p class="eyebrow">Before you reach out</p>
@@ -717,6 +766,7 @@ blockquote{font-family:Georgia,serif;font-size:clamp(1.6rem,3vw,2.6rem);
       <nav class="footer-links" aria-label="Footer navigation">
         <a href="#practice">Practice areas</a>
         <a href="#team">Our team</a>
+        <a href="/blog.html">News</a>
         <a href="#contact">Contact</a>
         <a href="#privacy">Privacy & inquiry notice</a>
       </nav>
